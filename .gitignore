@@ -1,0 +1,27 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment
+.env
+
+# Uploads (user photos — not committed)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# DeepFace model weights
+.deepface/
+
+# Node
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
