@@ -15,6 +15,11 @@ with engine.connect() as conn:
     for col in ["email VARCHAR(255)", "phone VARCHAR(50)", "linkedin VARCHAR(255)", "occupation VARCHAR(255)"]:
         conn.execute(text(f"ALTER TABLE users ADD COLUMN IF NOT EXISTS {col}"))
     conn.execute(text("ALTER TABLE attendance ADD COLUMN IF NOT EXISTS event_id INTEGER REFERENCES events(id)"))
+    # Migrate embedding column from vector to text if needed (pgvector removed)
+    try:
+        conn.execute(text("ALTER TABLE users ALTER COLUMN embedding TYPE TEXT USING embedding::TEXT"))
+    except Exception:
+        pass  # column is already TEXT or doesn't exist yet
     # DB-level duplicate guard: one person per event; NULL event_id falls back to app-level date check
     conn.execute(text("""
         CREATE UNIQUE INDEX IF NOT EXISTS uq_attendance_user_event

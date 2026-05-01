@@ -4,6 +4,7 @@ from database import get_db
 from models import User, Attendance, Event
 from face_service import get_embedding, save_upload_bytes, save_base64_image, UPLOAD_DIR
 import os
+import json
 
 router = APIRouter(prefix="/api/register", tags=["register"])
 
@@ -52,7 +53,7 @@ async def register_user(
         linkedin=linkedin.strip() if linkedin else None,
         occupation=occupation.strip() if occupation else None,
         image_url=image_url,
-        embedding=embedding,
+        embedding=json.dumps(embedding),  # serialize to JSON string
     )
     db.add(user)
     db.commit()

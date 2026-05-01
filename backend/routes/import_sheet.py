@@ -1,5 +1,6 @@
 import csv
 import io
+import json
 import os
 import re
 import uuid
@@ -127,7 +128,7 @@ def import_from_sheet(body: ImportRequest, db: Session = Depends(get_db)):
             linkedin=row.get("linkedin", ""),
             occupation=row.get("occupation", ""),
             image_url=f"/uploads/{filename}",
-            embedding=embedding,
+            embedding=json.dumps(embedding),  # serialize to JSON string
         )
         db.add(user)
         db.commit()
