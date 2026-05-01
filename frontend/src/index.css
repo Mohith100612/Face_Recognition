@@ -819,6 +819,65 @@ html, body, #root {
 .import-errors summary { cursor: pointer; color: var(--muted); font-size: 13px; margin-top: 6px; }
 .import-errors ul { margin: 8px 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.8; }
 
+/* ── Users Page ── */
+.ul-page {
+  min-height: calc(100vh - 56px);
+  background: var(--bg);
+  padding: 36px 24px;
+  display: flex;
+  justify-content: center;
+}
+.ul-container {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ul-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.ul-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ul-count {
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+.ul-sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.ul-search {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.ul-search:focus { border-color: var(--accent); }
+.ul-search::placeholder { color: var(--muted); opacity: 0.6; }
+.ul-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 60px 0;
+  font-size: 15px;
+}
+
 /* ── Display Page (projector screen) ────────────────────────────────── */
 .dp-page {
   width: 100vw;

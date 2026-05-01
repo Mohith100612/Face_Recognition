@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, UniqueConstraint, Text
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, UniqueConstraint, LargeBinary
 from datetime import datetime
 from database import Base
 
@@ -13,7 +13,7 @@ class User(Base):
     linkedin = Column(String(255))
     occupation = Column(String(255))
     image_url = Column(String)
-    embedding = Column(Text)  # stored as JSON string, e.g. "[0.1, 0.2, ...]"
+    embedding = Column(LargeBinary)  # np.float32 bytes, 128 floats * 4 bytes = 512 bytes
     registered_at = Column(DateTime, default=datetime.utcnow)
 
 

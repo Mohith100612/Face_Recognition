@@ -10,7 +10,6 @@ from typing import Optional
 from datetime import datetime
 import ws_manager
 import numpy as np
-import json
 import os
 
 router = APIRouter(prefix="/api/attendance", tags=["attendance"])
@@ -76,12 +75,12 @@ def detect_face(request: DetectRequest, db: Session = Depends(get_db)):
 
         for user in users:
             try:
-                user_embedding = json.loads(user.embedding)
+                user_embedding = np.frombuffer(user.embedding, dtype=np.float32)
                 dist = cosine_distance(embedding, user_embedding)
                 if dist < best_distance:
                     best_distance = dist
                     best_match = user
-            except (json.JSONDecodeError, TypeError):
+            except (TypeError, ValueError):
                 continue
 
         if best_match is None:
@@ -125,8 +124,8 @@ def detect_face(request: DetectRequest, db: Session = Depends(get_db)):
             else:
                 # status = "enrolled" → first face scan, mark as present
                 db.execute(
-                    text("UPDATE attendance SET status='present', timestamp=NOW() WHERE id=:aid"),
-                    {"aid": record.id},
+                    text("UPDATE attendance SET status='present', timestamp=:ts WHERE id=:aid"),
+                    {"aid": record.id, "ts": datetime.utcnow()},
                 )
                 db.commit()
         else:
